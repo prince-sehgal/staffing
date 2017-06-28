@@ -1,0 +1,253 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href=@Url.Content("~/bootstrap/css/bootstrap.min.css")>
+    <link rel="stylesheet" href=@Url.Content("~/dist/css/font-awesome.min.css")>
+    <link rel="stylesheet" href=@Url.Content("~/dist/css/ionicons.min.css")>
+    <link rel="stylesheet" href=@Url.Content("~/dist/css/AdminLTE.css")>
+    <link rel="stylesheet" href=@Url.Content("~/dist/css/skins/_all-skins.min.css")>
+    <link rel="stylesheet" href=@Url.Content("~/plugins/iCheck/flat/blue.css")>
+    <link href=@Url.Content("~/dist/js/datatables/jquery.dataTables.min.css") rel="stylesheet" type="text/css" />
+    <link href=@Url.Content("~/dist/js/datatables/buttons.bootstrap.min.css") rel="stylesheet" type="text/css" />
+    <link href=@Url.Content("~/dist/js/datatables/fixedHeader.bootstrap.min.css") rel="stylesheet" type="text/css" />
+    <link href=@Url.Content("~/dist/js/datatables/responsive.bootstrap.min.css") rel="stylesheet" type="text/css" />
+    <link href=@Url.Content("~/dist/js/datatables/scroller.bootstrap.min.css") rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href=@Url.Content("~/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css")>
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+        <header class="main-header">
+            <a href="#" class="logo">
+                <span class="logo-lg">Mercer</span>
+            </a>
+            <nav class="navbar navbar-static-top">
+                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown messages-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-envelope-o"></i>
+                                <span class="label label-success">4</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <ul class="menu">
+                                        <li>
+                                            <a href="#">
+                                                <div class="pull-left">
+                                                    <img src=@Url.Content("~/dist/img/user2-160x160.jpg") class="img-circle" alt="User Image">
+                                                </div>
+                                                <h4>
+                                                    Support Team
+                                                    <small><i class="fa fa-clock-o"></i> 5 mins</small>
+                                                </h4>
+                                                <p>Why not buy a new awesome theme?</p>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <div class="pull-left">
+                                                    <img src=@Url.Content("~/dist/img/user3-128x128.jpg") class="img-circle" alt="User Image">
+                                                ></div>
+                                                <h4>
+                                                    AdminLTE Design Team
+                                                    <small><i class="fa fa-clock-o"></i> 2 hours</small>
+                                                </h4>
+                                                <p>Why not buy a new awesome theme?</p>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <div class="pull-left">
+                                                    <img src=@Url.Content("~/dist/img/user4-128x128.jpg") class="img-circle" alt="User Image">
+                                                ></div>
+                                                <h4>
+                                                    Developers
+                                                    <small><i class="fa fa-clock-o"></i> Today</small>
+                                                </h4>
+                                                <p>Why not buy a new awesome theme?</p>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <div class="pull-left">
+                                                    <img src=@Url.Content("~/dist/img/user3-128x128.jpg") class="img-circle" alt="User Image">
+                                                ></div>
+                                                <h4>
+                                                    Sales Department
+                                                    <small><i class="fa fa-clock-o"></i> Yesterday</small>
+                                                </h4>
+                                                <p>Why not buy a new awesome theme?</p>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <div class="pull-left">
+                                                    <img src=@Url.Content("~/dist/img/user4-128x128.jpg") class="img-circle" alt="User Image">
+                                                ></div>
+                                                <h4>
+                                                    Reviewers
+                                                    <small><i class="fa fa-clock-o"></i> 2 days</small>
+                                                </h4>
+                                                <p>Why not buy a new awesome theme?</p>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="footer"><a href="#">View all general messages</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown notifications-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-bell-o"></i>
+                                <span class="label label-warning">10</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <ul class="menu">
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the
+                                                page and may cause design problems
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-users text-red"></i> 5 new members joined
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-shopping-cart text-green"></i> 25 sales made
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-user text-red"></i> You changed your username
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="footer"><a href="#">View all personal messages</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown user user-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src=@Url.Content("~/dist/img/user2-160x160.jpg") class="user-image" alt="User Image">
+                                <span class="hidden-xs">Prince Sehgal</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="user-header">
+                                    <img src=@Url.Content("~/dist/img/user2-160x160.jpg") class="img-circle" alt="User Image">
+                                    <p>
+                                        1076961
+                                        <small>IT Talent</small>
+                                    </p>
+                                </li>
+                                <li class="user-footer">
+                                    <div class="pull-left">
+                                        <a href="GerneralInformation.html" class="btn btn-default btn-flat">Profile</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        <a id="sign-out" href="~/home/logout" class="btn btn-default btn-flat">Sign out</a>
+                                        @*@Html.ActionLink("Sign out", "Logout", "Home", new { @class = "btn btn-default btn-flat" })*@
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <aside class="main-sidebar" style="z-index:1530;">
+            <section class="sidebar">
+                <ul class="sidebar-menu">
+                    <li class="active treeview">
+                        <a href="~/home/dashboard">
+                            <i class="fa fa-dashboard"></i><span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="treeview">
+                        <a href="~/Employee/Index">
+                            <i class="fa fa-list-alt"></i>
+                            <span>
+                                @*@Html.ActionLink("Refer someone!", "Index", "Employee")*@
+                                Refer someone
+                            </span>
+                        </a>
+                    </li>
+            </section>
+        </aside>
+        <div class="content-wrapper">
+            <section class="content">
+                <div class="row" id="dashboard">
+          @RenderBody()
+                </div>
+            </section>
+        </div>
+        <footer class="main-footer">
+            <div class="pull-right">
+                <strong>Copyright &copy; 2017 <a href="#">Mercer India Consulting Pvt. Ltd.</a></strong>
+            </div>
+            &nbsp;
+        </footer>
+        <div class="control-sidebar-bg"></div>
+    </div>
+    <script src="~/plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="~/dist/js/jquery-ui.min.js"></script>
+    <script>
+        $.widget.bridge('uibutton', $.ui.button);
+    </script>
+    <script src="~/dist/js/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/dist/js/datatables/dataTables.bootstrap.js"></script>
+    <script src="~/dist/js/datatables/dataTables.buttons.min.js"></script>
+    <script src="~/dist/js/datatables/buttons.bootstrap.min.js"></script>
+    <script src="~/dist/js/datatables/buttons.html5.min.js"></script>
+    <script src="~/dist/js/datatables/dataTables.fixedHeader.min.js"></script>
+    <script src="~/dist/js/datatables/dataTables.responsive.min.js"></script>
+    <script src="~/dist/js/datatables/responsive.bootstrap.min.js"></script>
+    <script src="~/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+    <script src="~/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <script src="~/plugins/fastclick/fastclick.js"></script>
+    @Scripts.Render("~/bundles/jquery")
+     <script src="~/dist/js/app.min.js"></script>
+   
+    <script src="~/dist/js/pages/dashboard.js"></script>
+    <script src="~/dist/js/demo.js"></script>
+    <script src="~/dist/js/moment/moment.min.js"></script>
+    <script src="~/dist/js/fullcalendar.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.mobile.loading().hide();
+            $('#datatable-responsive').DataTable(
+                       {
+                           "bPaginate": false,
+                           "bFilter": false,
+                           "bInfo": false,
+                           "paging": false,
+                           "lengthChange": false,
+                           "searching": false,
+                           "ordering": true,
+                           "info": false,
+                       }
+                     );
+        });
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>
