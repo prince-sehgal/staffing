@@ -50,7 +50,7 @@ namespace StaffingSite.Controllers
                         objUser.name = result.name;
                         objUser._id = result._id;
                         objUser.photo = result.photo;
-                        objUser.log = result.log;
+                        objUser.lob = result.lob;
                         Session["UserID"] = objUser._id;
                     }
                     else
@@ -81,7 +81,8 @@ namespace StaffingSite.Controllers
                     profile.name = result.name;
                     profile._id = result._id;
                     profile.photo = result.photo;
-                    profile.log = result.log;
+                    profile.lob = result.lob;
+                    profile.list = database.GetCollection<Positions>("position").FindAll().ToList();
                     return View(profile);
                 }
                 catch (Exception ex)

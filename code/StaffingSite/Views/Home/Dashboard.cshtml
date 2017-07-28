@@ -1,22 +1,5 @@
 ﻿@model StaffingSite.Models.UserProfile
-@*@{
-    ViewBag.Title = "UserDashBoard";
-}
-<fieldset>
-    <legend> User DashBoard </legend>
-    
-@if (Session["UserID"] != null) 
-{ <text>
-    Welcome @Html.Raw(Model.name) </text>
-    
-    @Html.ActionLink("Refer someone!","Index","Employee")
-    using (Html.BeginForm("Logout", "Home"))
-{
-     <input type="submit" value="Logout" />
-}
-}
- </fieldset>*@  
-<div class="col-lg-6 col-md-6">
+<div class="col-lg-12 col-md-12">
     <div class="panel panel-default">
         <div class="panel-heading" style="font-weight:bold;background-color: #3c8dbc !important;color: white;">
             Available Positions
@@ -26,38 +9,40 @@
             <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline" cellspacing="0" width="100%" role="grid" aria-describedby="datatable-responsive_info" style="width: 100%;">
                 <thead>
                     <tr role="row">
-                        <th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-sort="ascending" aria-label="First name: activate to sort column descending">SrNo.</th>
-                        <th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending">Level</th>
-                        <th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending">Title</th>
-                        <th width=200 class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending">Description</th>
+                        <th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-sort="ascending">SrNo.</th>
+                        <th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1">Designation</th>
+                        <th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1">LOB</th>
+                        <th width=200 class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1">Work Location</th>
+                        <th width=200 class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1">Shift  Timing</th>
+                        <th width=200 class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1">Roles and Responsibilities</th>
+                        <th width=200 class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1">Skills Required</th>
+                        <th width=200 class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1">Taleo Number</th>
+                        <th tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1"></th>
 
                     </tr>
                 </thead>
                 <tbody>
-                    <tr role="row" class="odd">
+                    @foreach (var Positions in Model.list)
+                    {
+                        
+                      <tr role="row" class="odd">
                         <td>1.</td>
-                        <td>C2</td>
-                        <td>Moule Lead</td>
-                        <td></td>
-                    </tr>
-                    <tr role="row" class="even">
-                        <td>2.</td>
-                        <td>D1</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr role="row" class="odd">
-                        <td>3.</td>
-                        <td>D2</td>
-                        <td>Manager</td>
-                        <td></td>
-                    </tr>
+                        <td>@Positions.designation</td>
+                        <td>@Positions.lob</td>
+                        <td>@Positions.worklocation</td>
+                        <td>@Positions.shift</td>
+                        <td>@Positions.role</td>
+                        <td>@Positions.Skills</td>
+                        <td>@Positions.taleonumber</td>
+                        <td>@Html.ActionLink("Reffer", "Index", "Employee", new { JobId = Positions._id }, null) </td>
+                    </tr>  
+                    }
                 </tbody>
             </table>
         </div>
     </div>
 </div>
-<div class="col-lg-6 col-md-6">
+@*<div class="col-lg-6 col-md-6">
     <div class="panel panel-default">
         <div class="panel-heading" style="font-weight:bold;background-color: #3c8dbc !important;color: white;">
             Refered Profile
@@ -67,4 +52,4 @@
         </div>
     </div>
 
-</div>
+</div>*@

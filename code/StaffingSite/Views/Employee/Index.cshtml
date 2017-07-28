@@ -57,7 +57,7 @@
 }*@
 
 
-<div class="col-md-6">
+<div class="col-md-9">
     <!-- general form elements -->
     <div class="box box-primary">
         <div class="box-header with-border">
@@ -76,23 +76,77 @@
                     @*<input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">*@
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Candidate Name</label>
-                    @Html.TextBoxFor(model => model.name, new { @class = "form-control", placeholder = "Enter Name" })
-                    @Html.ValidationMessageFor(model => model.name)
+                        <label>First Name</label><span class="mandatory">*</span>
+                        @Html.TextBoxFor(model => model.firstname, new { @class = "form-control", placeholder = "Enter First Name" })
+                        @Html.ValidationMessageFor(model => model.firstname)
+                    <br />
+                        <label>Middle Name</label>
+                        @Html.TextBoxFor(model => model.midname, new { @class = "form-control", placeholder = "Enter Middle Name" })
+                        @Html.ValidationMessageFor(model => model.midname)
+                    <br />
+                        <label>Last Name</label><span class="mandatory">*</span>
+                        @Html.TextBoxFor(model => model.lastname, new { @class = "form-control", placeholder = "Enter Last Name" })
+                        @Html.ValidationMessageFor(model => model.lastname)
+
+                    </div>
+                <div class="form-group">
+                    <label>DOB</label><span class="mandatory">*</span>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.TextBoxFor(model => model.dob, new { @class = "form-control", placeholder = "Date of Birth" })
+                        @Html.ValidationMessageFor(model => model.dob)
+                    </div>
+                  
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Candidate Email Id</label>
+                    <label>Primary Skill</label><span class="mandatory">*</span>
+                    @Html.TextBoxFor(model => model.primaryskill, new { @class = "form-control", placeholder = "Primary Skill" })
+                    @Html.ValidationMessageFor(model => model.primaryskill)
+                </div>
+                <div class="form-group">
+                    <label>Secondary Skill</label><span class="mandatory">*</span>
+                    @Html.TextBoxFor(model => model.secondaryskill, new { @class = "form-control", placeholder = "Secondary Skill" })
+                    @Html.ValidationMessageFor(model => model.secondaryskill)
+                </div>
+                <div class="form-group">
+                    <label>Total Experience</label><span class="mandatory">*</span>
+                    @Html.TextBoxFor(model => model.totalexp, new { @class = "form-control", placeholder = "Total Experience" })
+                    @Html.ValidationMessageFor(model => model.totalexp)
+                </div>
+                <div class="form-group">
+                    <label>Current Company</label><span class="mandatory">*</span>
+                    @Html.TextBoxFor(model => model.currentexp, new { @class = "form-control", placeholder = "Current Experience" })
+                    @Html.ValidationMessageFor(model => model.currentexp)
+                </div>
+                <div class="form-group">
+                    <label>Current Location</label><span class="mandatory">*</span>
+                    @Html.TextBoxFor(model => model.currentlocation, new { @class = "form-control", placeholder = "Current Location" })
+                    @Html.ValidationMessageFor(model => model.currentlocation)
+                </div>
+                <div class="form-group">
+                    <label>Preffered Location</label><span class="mandatory">*</span>
+                    @Html.TextBoxFor(model => model.preferredlocation, new { @class = "form-control", placeholder = "Preffered Location" })
+                    @Html.ValidationMessageFor(model => model.preferredlocation)
+                </div>
+                @*
+                {"lob",position.lob},
+                {"sublob",position.sublob},
+                {"taleonumber",position.taleonumber},*@
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Candidate Email Id</label><span class="mandatory">*</span>
                     @Html.TextBoxFor(model => model.emailid, new { @class = "form-control", placeholder = "Enter Email Id" })
                     @Html.ValidationMessageFor(model => model.emailid)
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Candidate Mobile Number</label>
+                    <label for="exampleInputEmail1">Candidate Mobile Number</label><span class="mandatory">*</span>
                     @Html.TextBoxFor(model => model.mobile, new { @class = "form-control", placeholder = "Enter Mobile Number" })
                     @Html.ValidationMessageFor(model => model.mobile)
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputFile">Attach CV</label>
-                    <input type="file" id="file">
+                    <label for="exampleInputFile">Attach CV</label><span class="mandatory">*</span>
+                    <input type="file" id="cvfile" name="cvfile">
                     @Html.ValidationMessage("CustomError")
                     @if (ViewBag.Message != null)
                     {
@@ -112,3 +166,12 @@
 </div>
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/jqueryval")
+
+
+@*<script type="text/javascript">
+    $(document).ready(function () {
+        //$("#dob").datepicker();
+        var $j = jQuery.noConflict();
+        $j("#dob").datepicker();
+    });
+</script>*@

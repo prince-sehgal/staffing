@@ -264,12 +264,14 @@
     <Content Include="dist\fonts\fontawesome-webfont.svg" />
     <Content Include="dist\img\boxed-bg.jpg" />
     <Content Include="dist\img\boxed-bg.png" />
+    <Content Include="dist\img\home.jpg" />
     <Content Include="dist\img\icons.png" />
     <Content Include="dist\img\icons.svg" />
     <Content Include="dist\img\image-1.jpg" />
     <Content Include="dist\img\image-2.jpg" />
     <Content Include="dist\img\image-3.jpg" />
     <Content Include="dist\img\loader.gif" />
+    <Content Include="dist\img\mercer.png" />
     <Content Include="dist\img\user1-128x128.jpg" />
     <Content Include="dist\img\user2-160x160.jpg" />
     <Content Include="dist\img\user3-128x128.jpg" />
@@ -333,6 +335,7 @@
     <Content Include="plugins\iCheck\polaris\Thumbs.db" />
     <Content Include="plugins\iCheck\square\Thumbs.db" />
     <Content Include="resources\Thumbs.db" />
+    <None Include="Properties\PublishProfiles\pesl.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.all.js" />
     <Content Include="plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.all.min.js" />
@@ -489,6 +492,7 @@
     <Content Include="source\plugins.js" />
     <Content Include="source\sly.js" />
     <Content Include="source\sly.min.js" />
+    <Content Include="src\img\home.jpg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

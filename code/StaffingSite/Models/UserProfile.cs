@@ -17,9 +17,11 @@ namespace StaffingSite.Models
         [Required(ErrorMessage = "Password is required")]
         public string password { get; set; }
 
+        public List<Positions> list { get; set; }
         public string name { get; set; }
-        public string log { get; set; }
+        public string lob { get; set; }
         public string photo { get; set; }
+        public string usertype{ get; set; }
         public string isactive { get; set; }
     }
 }
