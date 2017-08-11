@@ -33,7 +33,7 @@
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
                        
-                        <li class="dropdown notifications-menu">
+                        @*<li class="dropdown notifications-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-bell-o"></i>
                                 <span class="label label-warning">10</span>
@@ -71,23 +71,23 @@
                                 </li>
                                 <li class="footer"><a href="#">View all personal messages</a></li>
                             </ul>
-                        </li>
+                        </li>*@
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <img src=@Url.Content("~/dist/img/user2-160x160.jpg") class="user-image" alt="User Image">
-                                <span class="hidden-xs">Prince Sehgal</span>
+                                <img src=@Url.Content("~/dist/img/user1-128x128.jpg") class="user-image" alt="User Image">
+                                <span class="hidden-xs">@Session["name"]</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <li class="user-header">
-                                    <img src=@Url.Content("~/dist/img/user2-160x160.jpg") class="img-circle" alt="User Image">
+                                    <img src=@Url.Content("~/dist/img/user1-128x128.jpg") class="img-circle" alt="User Image">
                                     <p>
-                                        1076961
-                                        <small>IT Talent</small>
+                                        @Session["employeeid"]
+                                        <small>@Session["lob"]</small>
                                     </p>
                                 </li>
                                 <li class="user-footer">
                                     <div class="pull-left">
-                                        <a href="GerneralInformation.html" class="btn btn-default btn-flat">Profile</a>
+                                        <a href="~/home/dashboard" class="btn btn-default btn-flat">Profile</a>
                                     </div>
                                     <div class="pull-right">
                                         <a id="sign-out" href="~/home/logout" class="btn btn-default btn-flat">Sign out</a>
@@ -103,20 +103,46 @@
         <aside class="main-sidebar" style="z-index:1530;">
             <section class="sidebar">
                 <ul class="sidebar-menu">
-                    <li class="active treeview">
+                    @if (Convert.ToString(Session["usertype"]) == "1")
+                    { 
+                    <li class="treeview" id="dashboard">
                         <a href="~/home/dashboard">
                             <i class="fa fa-dashboard"></i><span>Dashboard</span>
                         </a>
                     </li>
-                    <li class="treeview">
+                    <li class="treeview" id="refer">
                         <a href="~/Employee/Index">
                             <i class="fa fa-list-alt"></i>
                             <span>
-                                @*@Html.ActionLink("Refer someone!", "Index", "Employee")*@
                                 Refer someone
                             </span>
                         </a>
                     </li>
+                    <li class="treeview" id="history">
+                        <a href="~/Employee/History">
+                            <i class="fa fa-history"></i>
+                            <span>
+                                History
+                            </span>
+                        </a>
+                    </li>
+                    }
+                    else
+                    { 
+                         <li class="treeview" id="hr-dashboard">
+                        <a href="~/home/hr">
+                            <i class="fa fa-dashboard"></i><span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="treeview" id="open-position">
+                        <a href="~/Home/Position">
+                            <i class="fa fa-list-alt"></i>
+                            <span>
+                                Open Position
+                            </span>
+                        </a>
+                    </li>
+                    }
             </section>
         </aside>
         <div class="content-wrapper">
@@ -139,18 +165,12 @@
     <script>
         $.widget.bridge('uibutton', $.ui.button);
     </script>
-    <script src="~/dist/js/datatables/jquery.dataTables.min.js"></script>
-    <script src="~/dist/js/datatables/dataTables.bootstrap.js"></script>
-    <script src="~/dist/js/datatables/dataTables.buttons.min.js"></script>
-    <script src="~/dist/js/datatables/buttons.bootstrap.min.js"></script>
-    <script src="~/dist/js/datatables/buttons.html5.min.js"></script>
-    <script src="~/dist/js/datatables/dataTables.fixedHeader.min.js"></script>
-    <script src="~/dist/js/datatables/dataTables.responsive.min.js"></script>
-    <script src="~/dist/js/datatables/responsive.bootstrap.min.js"></script>
+    
     <script src="~/bootstrap/js/bootstrap.min.js"></script>
     <script src="~/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
     <script src="~/plugins/slimScroll/jquery.slimscroll.min.js"></script>
     <script src="~/plugins/fastclick/fastclick.js"></script>
+
     @Scripts.Render("~/bundles/jquery")
      <script src="~/dist/js/app.min.js"></script>
    
@@ -159,25 +179,36 @@
     <script src="~/dist/js/moment/moment.min.js"></script>
     <script src="~/dist/js/fullcalendar.js"></script>
     <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.11/jquery-ui.min.js"></script>
+    <script src="~/dist/js/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/dist/js/datatables/dataTables.bootstrap.js"></script>
+    <script src="~/dist/js/datatables/dataTables.buttons.min.js"></script>
+    <script src="~/dist/js/datatables/buttons.bootstrap.min.js"></script>
+    <script src="~/dist/js/datatables/buttons.html5.min.js"></script>
+    <script src="~/dist/js/datatables/dataTables.fixedHeader.min.js"></script>
+    <script src="~/dist/js/datatables/dataTables.responsive.min.js"></script>
+    <script src="~/dist/js/datatables/responsive.bootstrap.min.js"></script>
+
     <script type="text/javascript">
         $(document).ready(function () {
-            $("#dob").datepicker();
             $.mobile.loading().hide();
             $('#datatable-responsive').DataTable(
-                       {
-                           "bPaginate": false,
-                           "bFilter": false,
-                           "bInfo": false,
-                           "paging": false,
-                           "lengthChange": false,
-                           "searching": false,
-                           "ordering": true,
-                           "info": false,
-                       }
-                     );
-           
+                     {
+                         "bPaginate": false,
+                         "bFilter": false,
+                         "bInfo": false,
+                         "paging": false,
+                         "lengthChange": false,
+                         "searching": false,
+                         "ordering": true,
+                         "info": false,
+                     }
+                   );
         });
     </script>
     @RenderSection("scripts", required: false)
 </body>
 </html>
+    

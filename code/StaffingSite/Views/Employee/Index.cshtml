@@ -2,61 +2,6 @@
 @{
       ViewBag.Title = "Refer Candidate";
 }
-@*@using (Html.BeginForm("Index", "Employee", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    @Html.ValidationSummary(true)
-    @Html.AntiForgeryToken()
-    <fieldset>
-        <legend>Refer Someone</legend>
-        @if (ViewBag.Message != null)
-        {
-            <span style="color:green">
-                @ViewBag.Message
-            </span>
-        }
-        <div class="editor-label">
-            @Html.DropDownListFor(m => m.jobid, Model.positions, "Select position")
-    </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.name)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.name)
-            @Html.ValidationMessageFor(model => model.name)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.emailid)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.emailid)
-            @Html.ValidationMessageFor(model => model.emailid)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.mobile)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.mobile)
-            @Html.ValidationMessageFor(model => model.mobile)
-        </div>
-
-        <div class="editor-label">
-            Select CV
-        </div>
-        <div class="editor-field">
-            <input type="file" name="file" />
-            @Html.ValidationMessage("CustomError")
-        </div>
-        <p>
-            <input type="submit" value="Refer" />
-        </p>
-    </fieldset>
-    
-    @Scripts.Render("~/bundles/jquery")
-}*@
-
-
 <div class="col-md-9">
     <!-- general form elements -->
     <div class="box box-primary">
@@ -73,7 +18,7 @@
                 <div class="form-group">
                     <label for="exampleInputEmail1">Select Position</label>
                     @Html.DropDownListFor(m => m.jobid, Model.positions, "Select position", new { @class = "form-control" })
-                    @*<input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">*@
+                    @Html.ValidationMessageFor(model => model.jobid)
                 </div>
                 <div class="form-group">
                         <label>First Name</label><span class="mandatory">*</span>
@@ -95,10 +40,10 @@
                         <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                         </div>
-                        @Html.TextBoxFor(model => model.dob, new { @class = "form-control", placeholder = "Date of Birth" })
-                        @Html.ValidationMessageFor(model => model.dob)
+                        @Html.TextBoxFor(model => model.dob, new { @class = "form-control", placeholder = "Date of Birth", @readonly="readonly", style="background-color:#fff;" })
+                       
                     </div>
-                  
+                    @Html.ValidationMessageFor(model => model.dob)
                 </div>
                 <div class="form-group">
                     <label>Primary Skill</label><span class="mandatory">*</span>
@@ -130,10 +75,6 @@
                     @Html.TextBoxFor(model => model.preferredlocation, new { @class = "form-control", placeholder = "Preffered Location" })
                     @Html.ValidationMessageFor(model => model.preferredlocation)
                 </div>
-                @*
-                {"lob",position.lob},
-                {"sublob",position.sublob},
-                {"taleonumber",position.taleonumber},*@
                 <div class="form-group">
                     <label for="exampleInputEmail1">Candidate Email Id</label><span class="mandatory">*</span>
                     @Html.TextBoxFor(model => model.emailid, new { @class = "form-control", placeholder = "Enter Email Id" })
@@ -148,9 +89,15 @@
                     <label for="exampleInputFile">Attach CV</label><span class="mandatory">*</span>
                     <input type="file" id="cvfile" name="cvfile">
                     @Html.ValidationMessage("CustomError")
-                    @if (ViewBag.Message != null)
+                    @if (ViewBag.Message != null && !ViewBag.Message.Contains("Error"))
                     {
-                       <p class="help-block">
+                       <p class="help-block" style="color: #12b94f;">
+                            @ViewBag.Message
+                        </p>
+                    }
+                    else if (ViewBag.Message != null)
+                    {
+                        <p class="help-block" style="color: red;">
                             @ViewBag.Message
                         </p>
                     }
@@ -161,17 +108,45 @@
             <div class="box-footer">
                 <button type="submit" class="btn btn-primary">Submit Request</button>
             </div>
+            
         }
     </div>
+   
 </div>
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/jqueryval")
-
-
-@*<script type="text/javascript">
+<script type="text/javascript">
     $(document).ready(function () {
-        //$("#dob").datepicker();
-        var $j = jQuery.noConflict();
-        $j("#dob").datepicker();
+        $('#refer').addClass('active');
+        $('#dob').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-65:-18",
+            dateFormat: 'dd/mm/yy'
+        });
     });
-</script>*@
+    $(window).scroll(function () {
+        sessionStorage.scrollTop = $(this).scrollTop();
+    });
+
+    $(document).ready(function () {
+        if (sessionStorage.scrollTop != "undefined") {
+            $(window).scrollTop(sessionStorage.scrollTop);
+        }
+        if (GetParameterValues('JobId') != null) {
+            $("#jobid").prop('disabled', true);
+        }
+        else {
+            $("#jobid").prop('disabled', false);
+        }
+    });
+    function GetParameterValues(param) {
+        var url = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        for (var i = 0; i < url.length; i++) {
+            var urlparam = url[i].split('=');
+            if (urlparam[0] == param) {
+                return urlparam[1];
+            }
+        }
+    }
+</script>

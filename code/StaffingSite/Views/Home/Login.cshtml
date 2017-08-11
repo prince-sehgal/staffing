@@ -19,59 +19,9 @@
         }
         
     </style>
-    @*<link rel="stylesheet" href="~/content/site.css">*@
 </head>
-@*@Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")*@
 </head>
 <body class="loginbody">
-    @*<h2>Login</h2>
-        @using (Html.BeginForm("Login", "Home", FormMethod.Post))
-        {
-            @Html.ValidationSummary(true)
-            <fieldset>
-                <legend>Mvc Simple Login Application Demo</legend>
-
-                @if (@ViewBag.Message != null)
-                {
-                    <div style="border: 1px solid red">
-                        @ViewBag.Message
-                    </div>
-                }
-                <table>
-                    <tr>
-                        <td>@Html.LabelFor(a => a.username)</td>
-                        <td>@Html.TextBoxFor(a => a.username)</td>
-                        <td>@Html.ValidationMessageFor(a => a.username)</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            @Html.LabelFor(a => a.password)
-                        </td>
-                        <td>
-                            @Html.PasswordFor(a => a.password)
-                        </td>
-                        <td>
-                            @Html.ValidationMessageFor(a => a.password)
-                        </td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>
-                            <input type="submit" value="Login" />
-                        </td>
-                        <td></td>
-                    </tr>
-                </table>
-            </fieldset>
-            @Scripts.Render("~/bundles/jquery")
-            @Scripts.Render("~/bundles/jqueryval")
-        }*@
-
-    @*@RenderBody()*@
-
-    @*@Scripts.Render("~/bundles/jquery")*@
-    @*@RenderSection("scripts", required: false)*@
     <body class="hold-transition login-page">
         <div class="login-box" style="margin:12% 2% 0% 2%">
             <div class="login-box-body" style="background:none;">
@@ -82,8 +32,6 @@
                     @Html.ValidationSummary(true)
                     <div class="form-group has-feedback">
                         @Html.TextBoxFor(a => a.username, new { @class = "form-control", placeholder = "Username" })<br />
-                        @*@Html.ValidationMessageFor(a => a.username)*@
-                        @*<input type="email" class="form-control" placeholder="Email">*@
                         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                         @*<td>@Html.LabelFor(a => a.username)</td>
                             <td>@Html.TextBoxFor(a => a.username)</td>
@@ -91,8 +39,6 @@
                     </div>
                     <div class="form-group has-feedback">
                         @Html.PasswordFor(a => a.password, new { @class = "form-control", placeholder = "Password" })<br />
-                        @*@Html.ValidationMessageFor(a => a.password)*@
-                        @*<input type="password" class="form-control" placeholder="Password">*@
                         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     </div>
                     <div class="row">
@@ -104,14 +50,14 @@
                             <button type="button" class="btn btn-primary btn-block btn-flat">Help</button>
                         </div>
                     </div>
-                    <div class="row" style="margin-bottom:40px">
-                        @if (@ViewBag.Message != null)
+<div class="form-group has-feedback" style="margin-bottom:40px">
+    @if (@ViewBag.Message != null)
                         {
-                            <div>
-                                @ViewBag.Message
-                            </div>
+    <div class="form-group has-feedback" style="color:red;">
+        @ViewBag.Message
+    </div>
                         }
-                    </div>
+</div>
                 }
                 @Scripts.Render("~/bundles/jquery")
                 @Scripts.Render("~/bundles/jqueryval")

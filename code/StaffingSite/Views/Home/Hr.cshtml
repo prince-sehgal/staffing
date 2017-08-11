@@ -1,0 +1,61 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-lg-12 col-md-12">
+    <div class="panel panel-default">
+        <div class="panel-heading" style="font-weight:bold;background-color: #3c8dbc !important;color: white;">
+            Positions
+            <span style="float:right;" id="today-homework"></span>
+        </div>
+        @if (Model.list.Count > 0)
+        { 
+        <div class="panel-body">
+            <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline" cellspacing="0"  role="grid" aria-describedby="datatable-responsive_info" style="width: 100%;">
+                <thead>
+                    <tr role="row">
+                        <th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1" aria-sort="ascending">SrNo.</th>
+                        <th width=200 class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1">Taleo Number</th>
+                        <th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1">Designation</th>
+                        <th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1">LOB</th>
+                        <th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1">Work Location</th>
+                        <th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1">Shift Timing</th>
+                        <th class="sorting" tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1">Referals</th>
+                        <th tabindex="0" aria-controls="datatable-responsive" rowspan="1" colspan="1"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{int count = 1;}
+                    @foreach (var Positions in Model.list)
+                    {
+                        <tr role="row" class="even">
+                            <td>@(count++).</td>
+                            <td>@Positions.taleonumber</td>
+                            <td>@Positions.designation</td>
+                            <td>@Positions.lob</td>
+                            <td>@Positions.worklocation</td>
+                            <td>@Positions.shift</td>
+                            <td>@Positions.headcount</td>
+                            <td>@Html.ActionLink("View All", "Applications", "Home", new { PositionId = Positions._id }, null) </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+        }
+        else
+        {
+             <h5 style="margin:5px;">No position found.</h5>
+        }
+    </div>
+</div>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#hr-dashboard').addClass('active');
+        
+    });
+</script>
+

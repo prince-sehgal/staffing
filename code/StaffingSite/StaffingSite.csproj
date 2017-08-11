@@ -219,6 +219,7 @@
     <Content Include="dist\css\AdminLTE.css" />
     <Content Include="dist\css\AdminLTE.min.css" />
     <Content Include="dist\css\custom.css" />
+    <Content Include="dist\css\daterangepicker.css" />
     <Content Include="dist\css\font-awesome.min.css" />
     <Content Include="dist\css\fullcalendar.min.css" />
     <Content Include="dist\css\fullcalendar.print.min.css" />
@@ -302,6 +303,7 @@
     <Content Include="dist\js\datatables\responsive.bootstrap.min.js" />
     <Content Include="dist\js\datatables\scroller.bootstrap.min.css" />
     <Content Include="dist\js\datatables\vfs_fonts.js" />
+    <Content Include="dist\js\daterangepicker.js" />
     <Content Include="dist\js\demo.js" />
     <Content Include="dist\js\fullcalendar.js" />
     <Content Include="dist\js\fullcalendar.min.js" />
@@ -508,6 +510,10 @@
     <Content Include="Views\Home\Dashboard.cshtml" />
     <Content Include="Views\Employee\Index.cshtml" />
     <Content Include="src\img\Thumbs.db" />
+    <Content Include="Views\Employee\History.cshtml" />
+    <Content Include="Views\Home\Hr.cshtml" />
+    <Content Include="Views\Home\Applications.cshtml" />
+    <Content Include="Views\Home\Position.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

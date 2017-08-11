@@ -1,0 +1,133 @@
+﻿@model StaffingSite.Models.Positions
+@{
+    ViewBag.Title = "Open Position";
+}
+<div class="col-md-9">
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Open New Position</h3>
+        </div>
+        @using (Html.BeginForm("Position", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.ValidationSummary(true)
+            @Html.AntiForgeryToken()
+            <div class="box-body">
+                <div class="form-group">
+                    <label>Taleo Number</label><span class="mandatory">*</span>
+                    @Html.TextBoxFor(model => model.taleonumber, new { @class = "form-control", placeholder = "Enter Taleo Number" })
+                    @Html.ValidationMessageFor(model => model.taleonumber)
+                </div>
+                <div class="form-group">
+                    <label>Designation</label><span class="mandatory">*</span>
+                    @Html.TextBoxFor(model => model.designation, new { @class = "form-control", placeholder = "Enter Designation" })
+                    @Html.ValidationMessageFor(model => model.designation)
+                </div>
+                <div class="form-group">
+                    <label>Line of Business</label><span class="mandatory">*</span>
+                    @Html.TextBoxFor(model => model.lob, new { @class = "form-control", placeholder = "Enter Line of Business" })
+                    @Html.ValidationMessageFor(model => model.lob)
+                </div>
+                <div class="form-group">
+                    <label>Work Location</label><span class="mandatory">*</span>
+                    @Html.TextBoxFor(model => model.worklocation, new { @class = "form-control", placeholder = "Enter Work Location" })
+                    @Html.ValidationMessageFor(model => model.worklocation)
+                </div>
+                <div class="form-group">
+                    <label>Shift Time</label><span class="mandatory">*</span>
+                    @*@Html.TextBoxFor(model => model.shift, new { @class = "form-control", placeholder = "Select Shift Time" })*@
+                    @Html.DropDownListFor(m => m.shift, Model.Shifts, "Select Shift Time", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.shift)
+                </div>
+
+                <div class="form-group">
+                    <label>Start Date</label><span class="mandatory">*</span>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.TextBoxFor(model => model.sdate, new { @class = "form-control", placeholder = "Select Start Date", @readonly = "readonly", style = "background-color:#fff;" })
+
+                    </div>
+                    @Html.ValidationMessageFor(model => model.sdate)
+                </div>
+
+                <div class="form-group">
+                    <label>End Date</label><span class="mandatory">*</span>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        @Html.TextBoxFor(model => model.edate, new { @class = "form-control", placeholder = "Select End Date", @readonly = "readonly", style = "background-color:#fff;" })
+
+                    </div>
+                    @Html.ValidationMessageFor(model => model.edate)
+                </div>
+
+                <div class="form-group">
+                    <label>Role</label><span class="mandatory">*</span>
+                    @Html.TextAreaFor(model => model.role, new { @class = "form-control", placeholder = "" })
+                    @Html.ValidationMessageFor(model => model.role)
+                </div>
+
+                <div class="form-group">
+                    <label>Skills</label><span class="mandatory">*</span>
+                    @Html.TextAreaFor(model => model.Skills, new { @class = "form-control", placeholder = "" })
+                    @Html.ValidationMessageFor(model => model.Skills)
+                </div>
+            </div>
+                <div class="form-group">
+                @Html.ValidationMessage("CustomError")
+                @if (ViewBag.Message != null && !ViewBag.Message.Contains("Error"))
+                {
+                    <p class="help-block" style="color: #12b94f;">
+                        @ViewBag.Message
+                    </p>
+                }
+                else if (ViewBag.Message != null)
+                {
+                    <p class="help-block" style="color: red;">
+                        @ViewBag.Message
+                    </p>
+                }
+            </div>
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Save Position</button>
+            </div>
+        }
+    </div>
+
+</div>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#open-position').addClass('active');
+        $('#sdate').datepicker({
+            dateFormat: 'dd/mm/yy',
+            //onSelect: function (dateText) {
+            //    alert($('#edate').val() != '');
+            //    alert(new Date(dateText));
+            //    alert(new Date($('#edate').val()));
+            //    console.log(dateText + ' ' + $('#sdate').val());
+            //    if ($('#edate').val() != '' && new Date(dateText) > new Date($('#edate').val())) {
+            //        alert('Start Date cannot be greater than End Date');
+            //        $('#sdate').val('');
+            //    }
+            //}
+        });
+        $('#edate').datepicker({
+            dateFormat: 'dd/mm/yy',
+            onSelect: function (dateText) {
+                console.log(dateText + ' ' + $('#edate').val());
+                if ($('#sdate').val() == '') {
+                    alert('Please select Start Date.');
+                    $('#edate').val('');
+                }
+                else if (new Date($('#sdate').val()) > new Date(dateText)) {
+                    alert('End Date cannot be less than Start Date');
+                    $('#edate').val('');
+                }
+            }
+        });
+    });
+</script>
