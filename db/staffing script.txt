@@ -28,7 +28,8 @@ db.UserProfile.insert({"username" : "rajiv-rao", "password" : "1076961", "name" 
 
 
 
-
+//mongodump --db staffing --out c:\Mongo
+//mongorestore --db NewDBName --drop c:\Mongo\staffing
 
 
 
