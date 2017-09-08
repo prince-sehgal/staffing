@@ -11,3 +11,50 @@ word" : "1076961", "name" : "Prince Sehgal", "log" : "IT-Talent", "photo" : "",
 db.UserProfile.insert({"username" : "prince-lnu", "password" : "1076961", "name" : "Prince Sehgal", "lob" : "IT-Talent", "photo" : "","usertype":"1","isactive" : "true"})
 
 db.UserProfile.insert({"username" : "rajiv-rao", "password" : "1076961", "name" : "Rajiv Rao", "lob" : "GOSS", "photo" : "","usertype":"0","isactive" : "true"})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+db.position.insert({"designation":"SSE","lob":"GTSS","work location":"Gurgaon","shift":"11:30 AM to 8:30 PM","role":"Understand requirements, application area as it relates to assigned projects/tasks","Skills":"Must to have hands-on development & design experience in C#, ASP.NET, MVC 5.0 (Razor View Engine), JavaScript, AJAX, LINQ","taleo number":"GUR007R8","sdate":"01/08/2017","edate":"25/08/2017"})
+
+
+--db.position.update({"lob":"GTSS"},{$set:{"sdate":"01/08/2017"}})
+--db.position.update({"lob":"GTSS"},{$set:{"edate":"31/08/2017"}})
+
+--db.position.update({},{$set:{"publishedby":"59845c23a3a77448a866ece0"}})
+
+switched to db staffing
+> db.UserProfile.find()
+{ "_id" : ObjectId("593b8d52cd1d9a50e315e9ff"), "username" : "prince-lnu", "pass
+word" : "1076961", "name" : "Prince Sehgal", "log" : "IT-Talent", "photo" : "",
+"isactive" : "true" }
+> aco_indfnta
+
+
+db.UserProfile.insert({"username" : "prince-lnu", "password" : "1076961", "name" : "Prince Sehgal", "employeeid" : "1076961", "lob" : "IT-Talent", "photo" : "","usertype":"1","isactive" : "true"})
+
+db.UserProfile.insert({"username" : "rajiv-rao", "password" : "1076961", "name" : "Rajiv Rao", "employeeid" : "1074501", "lob" : "GOSS", "photo" : "","usertype":"0","isactive" : "true"})
