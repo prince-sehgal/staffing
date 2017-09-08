@@ -4,25 +4,22 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using StaffingSite.Models;
-using MongoDB.Bson;
+using System.IO;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
-using System.IO;
 using System.Configuration;
+using StaffingSite.MongoDB;
+using MongoDB.Bson;
+
 namespace StaffingSite.Controllers
 {
     public class EmployeeController : Controller
     {
-        ObjectId id = new ObjectId();
-
-        MongoClient client = null;
-        MongoServer server = null;
-        MongoDatabase database = null;
-        MongoCollection UserDetailscollection = null;
-        //static Positions DefaultPositionObject = null;
-        string globalJobId = null;
-        string connectionString = "mongodb://localhost";
-
+        public MongoDBConnector Connector;
+        public EmployeeController()
+        {
+            this.Connector = new MongoDBConnector();
+        }
         public ActionResult Index(string JobId)
         {
             Session["UserID"] = "59845c13a3a77448a866ecdf";
@@ -30,11 +27,8 @@ namespace StaffingSite.Controllers
             {
                 Session["globalJobId"] = JobId;
                 Positions position = new Positions();
-                client = new MongoClient(connectionString);
-                server = client.GetServer();
-                database = server.GetDatabase("staffing");
                 position.jobid = Convert.ToString(Session["globalJobId"]);
-                position.positions = new SelectList(database.GetCollection<Positions>("position").FindAll().ToList(), "_id", "title");
+                position.positions = new SelectList(Connector.GetDatabase().GetCollection<Positions>("position").FindAll().ToList(), "_id", "title");
                 Session["model"] = position;
 
                 return View(Session["model"]);
@@ -52,27 +46,25 @@ namespace StaffingSite.Controllers
                 try
                 {
                     UserProfile profile = new UserProfile();
-                    client = new MongoClient(connectionString);
-                    server = client.GetServer();
-                    database = server.GetDatabase("staffing");
-                    var result = database.GetCollection<UserProfile>("UserProfile").FindOne(Query.EQ("_id", ObjectId.Parse(Session["UserID"].ToString())));
+                   
+                    var result = Connector.GetDatabase().GetCollection<UserProfile>("UserProfile").FindOne(Query.EQ("_id", ObjectId.Parse(Session["UserID"].ToString())));
                     profile.isactive = result.isactive;
                     profile.name = result.name;
                     profile._id = result._id;
                     profile.photo = result.photo;
                     profile.lob = result.lob;
-                    profile.ReferedCandidatesList = database.GetCollection<ReferredList>("candidate").Find(Query.EQ("referedby", Session["UserID"].ToString())).ToList();
+                    profile.ReferedCandidatesList = Connector.GetDatabase().GetCollection<ReferredList>("candidate").Find(Query.EQ("referedby", Session["UserID"].ToString())).ToList();
                     foreach (ReferredList candidate in profile.ReferedCandidatesList)
-	{
-                        var job = database.GetCollection<Positions>("position").FindOne(Query.EQ("_id", ObjectId.Parse(candidate.jobid)));
+                    {
+                        var job = Connector.GetDatabase().GetCollection<Positions>("position").FindOne(Query.EQ("_id", ObjectId.Parse(candidate.jobid)));
                         candidate.designation = job.designation;
                         candidate.taleonumber = job.taleonumber;
-	}
+                    }
                     return View(profile);
                 }
                 catch (Exception ex)
                 {
-                    ViewBag.Message=ex.Message;
+                    ViewBag.Message = ex.Message;
                     return View();
                 }
             }
@@ -104,11 +96,10 @@ namespace StaffingSite.Controllers
                 candidate obj = new candidate();
                 string fileName = Guid.NewGuid() + Path.GetExtension(cvfile.FileName);
                 cvfile.SaveAs(Path.Combine(Server.MapPath("~/Attachments"), fileName));
-                client = new MongoClient(connectionString);
-                server = client.GetServer();
-                database = server.GetDatabase("staffing");
-                long ReferenceId = database.GetCollection<candidate>("candidate").Count() + long.Parse(ConfigurationManager.AppSettings["InitialCount"]) + 1;
-                MongoCollection<candidate> collection = database.GetCollection<candidate>("candidate");
+              
+
+                long ReferenceId = Connector.GetDatabase().GetCollection<candidate>("candidate").Count() + long.Parse(ConfigurationManager.AppSettings["InitialCount"]) + 1;
+                MongoCollection<candidate> collection = Connector.GetDatabase().GetCollection<candidate>("candidate");
                 BsonDocument candidate = new BsonDocument
                                                  {  
                                                         {"jobid",position.jobid},  

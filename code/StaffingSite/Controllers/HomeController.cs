@@ -8,21 +8,17 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 using System.Configuration;   
+using StaffingSite.MongoDB;
 
 namespace StaffingSite.Controllers
 {
     public class HomeController : Controller
     {
-        //
-        // GET: /Home/
-        ObjectId id = new ObjectId();
-
-        MongoClient client = null;
-        MongoServer server = null;
-        MongoDatabase database = null;
-        MongoCollection UserDetailscollection = null;
-
-        string connectionString = "mongodb://localhost";
+        public MongoDBConnector Connector;
+        public HomeController()
+        {
+            this.Connector = new MongoDBConnector();
+        }
         private List<UserProfile> _UserList = new List<UserProfile>();
 
         public ActionResult Login()
@@ -41,10 +37,7 @@ namespace StaffingSite.Controllers
             {
                 try
                 {
-                    client = new MongoClient(connectionString);
-                    server = client.GetServer();
-                    database = server.GetDatabase("staffing");
-                    var result = database.GetCollection<UserProfile>("UserProfile").FindOne(Query.EQ("username", objUser.username.ToLower()));
+                    var result = Connector.GetDatabase().GetCollection<UserProfile>("UserProfile").FindOne(Query.EQ("username", objUser.username.ToLower()));
                     if (result != null && Boolean.Parse(result.isactive))
                     {
                         if (result.password == objUser.password)
@@ -99,20 +92,17 @@ namespace StaffingSite.Controllers
                 try
                 {
                     UserProfile profile = new UserProfile();
-                    client = new MongoClient(connectionString);
-                    server = client.GetServer();
-                    database = server.GetDatabase("staffing");
-                    var result = database.GetCollection<UserProfile>("UserProfile").FindOne(Query.EQ("_id", ObjectId.Parse(Session["UserID"].ToString())));
+                    var result = Connector.GetDatabase().GetCollection<UserProfile>("UserProfile").FindOne(Query.EQ("_id", ObjectId.Parse(Session["UserID"].ToString())));
                     profile.isactive = result.isactive;
                     profile.name = result.name;
                     profile._id = result._id;
                     profile.photo = result.photo;
                     profile.lob = result.lob;
                     profile.employeeid = result.employeeid;
-                    profile.list = database.GetCollection<Positions>("position").FindAll().ToList();
+                    profile.list = Connector.GetDatabase().GetCollection<Positions>("position").FindAll().ToList();
                     foreach (Positions position in profile.list)
                     {
-                        position.headcount = database.GetCollection<ReferredList>("candidate").Find(Query.EQ("jobid", Convert.ToString(position._id))).ToList().Count;
+                        position.headcount = Connector.GetDatabase().GetCollection<ReferredList>("candidate").Find(Query.EQ("jobid", Convert.ToString(position._id))).ToList().Count;
                     }
                     List<SelectListItem> items = new List<SelectListItem>();
                     items.Add(new SelectListItem { Text = "In Process", Value = "0" });
@@ -159,17 +149,14 @@ namespace StaffingSite.Controllers
             position.Shifts = new SelectList(getShifts().Select(s => new SelectListItem() { Value = s.Name }), "Value", "Value");
                 try
                 {
-                    client = new MongoClient(connectionString);
-                    server = client.GetServer();
-                    database = server.GetDatabase("staffing");
-                    if (database.GetCollection<Positions>("position").Find(Query.EQ("taleonumber", position.taleonumber)).ToList().Count > 0)
+                    if (Connector.GetDatabase().GetCollection<Positions>("position").Find(Query.EQ("taleonumber", position.taleonumber)).ToList().Count > 0)
                     {
                         ViewBag.Message = "Error: Taleo Number already exists, please enter a unique Taleo Number.";
                         return View(position);
                     }
                     else
                     {
-                        MongoCollection<Positions> collection = database.GetCollection<Positions>("position");
+                        MongoCollection<Positions> collection = Connector.GetDatabase().GetCollection<Positions>("position");
                         BsonDocument newPosition = new BsonDocument
                                                  {  
                                                         {"taleonumber",position.taleonumber},  
@@ -203,17 +190,14 @@ namespace StaffingSite.Controllers
                 try
                 {
                     UserProfile profile = new UserProfile();
-                    client = new MongoClient(connectionString);
-                    server = client.GetServer();
-                    database = server.GetDatabase("staffing");
-                    var result = database.GetCollection<UserProfile>("UserProfile").FindOne(Query.EQ("_id", ObjectId.Parse(Session["UserID"].ToString())));
+                    var result = Connector.GetDatabase().GetCollection<UserProfile>("UserProfile").FindOne(Query.EQ("_id", ObjectId.Parse(Session["UserID"].ToString())));
                     profile.isactive = result.isactive;
                     profile.name = result.name;
                     profile._id = result._id;
                     profile.photo = result.photo;
                     profile.lob = result.lob;
-                    profile.ReferedCandidatesList = database.GetCollection<ReferredList>("candidate").Find(Query.EQ("jobid", Convert.ToString(PositionId))).ToList();
-                    var job = database.GetCollection<Positions>("position").FindOne(Query.EQ("_id", ObjectId.Parse(PositionId)));
+                    profile.ReferedCandidatesList = Connector.GetDatabase().GetCollection<ReferredList>("candidate").Find(Query.EQ("jobid", Convert.ToString(PositionId))).ToList();
+                    var job = Connector.GetDatabase().GetCollection<Positions>("position").FindOne(Query.EQ("_id", ObjectId.Parse(PositionId)));
                     profile.taleonumber = job.taleonumber;
                     return View(profile);
                 }
@@ -250,17 +234,14 @@ namespace StaffingSite.Controllers
                 try
                 {
                     UserProfile profile = new UserProfile();
-                    client = new MongoClient(connectionString);
-                    server = client.GetServer();
-                    database = server.GetDatabase("staffing");
-                    var result = database.GetCollection<UserProfile>("UserProfile").FindOne(Query.EQ("_id", ObjectId.Parse(Session["UserID"].ToString())));
+                    var result = Connector.GetDatabase().GetCollection<UserProfile>("UserProfile").FindOne(Query.EQ("_id", ObjectId.Parse(Session["UserID"].ToString())));
                     profile.isactive = result.isactive;
                     profile.name = result.name;
                     profile._id = result._id;
                     profile.photo = result.photo;
                     profile.lob = result.lob;
                     profile.employeeid = result.employeeid;
-                    profile.list = database.GetCollection<Positions>("position").FindAll().ToList();
+                    profile.list = Connector.GetDatabase().GetCollection<Positions>("position").FindAll().ToList();
                     return View(profile);
                 }
                 catch (Exception ex)

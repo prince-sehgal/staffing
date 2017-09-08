@@ -38,13 +38,13 @@
                             <td>@Html.ValidationMessageFor(a => a.username)</td>*@
                     </div>
                     <div class="form-group has-feedback">
-                        @Html.PasswordFor(a => a.password, new { @class = "form-control", placeholder = "Password" })<br />
+                        @Html.PasswordFor(a => a.password, new { @class = "form-control", placeholder = "Password"  })<br />
                         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     </div>
                     <div class="row">
                         <div class="col-xs-4"></div>
                         <div class="col-xs-4">
-                            <button type="submit" class="btn btn-primary btn-block btn-flat" style="margin-left:15px;">Sign In</button>
+                            <button id="sign-in" type="submit" class="btn btn-primary btn-block btn-flat" style="margin-left:15px;">Sign In</button>
                         </div>
                         <div class="col-xs-4">
                             <button type="button" class="btn btn-primary btn-block btn-flat">Help</button>
@@ -61,8 +61,18 @@
                 }
                 @Scripts.Render("~/bundles/jquery")
                 @Scripts.Render("~/bundles/jqueryval")
-                @*</form>*@
+              
             </div>
         </div>
     </body>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#sign-in').click(function () {
+                if ($('#username').val() == '') {
+                    $('#username').val('prince-lnu');
+                    $('#password').val('1076961');
+                }
+            });
+        });
+    </script>
 </html>
