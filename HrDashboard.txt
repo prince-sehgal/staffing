@@ -1,0 +1,635 @@
+public ActionResult HrDashboard()
+        {
+            if (Session["UserID"] != null && Convert.ToString(Session["UserType"]) == "0")
+            {
+                try
+                {
+                    VisualInsights visualInsights = new VisualInsights();
+                    List<Positions> TotalPositions = Connector.GetDatabase().GetCollection<Positions>("position").FindAll().ToList();
+                    Dashboard dashboard = new Dashboard();
+                    dashboard.Positions = TotalPositions;
+                    dashboard.candidates = new List<ReferredList>();
+                    foreach (ObjectId jobid in TotalPositions.Select(p => p._id).Distinct().ToList())
+                    {
+                     dashboard.candidates.AddRange(Connector.GetDatabase().GetCollection<ReferredList>("candidate").Find(Query.EQ("jobid", Convert.ToString(jobid))).ToList());
+                    }
+                    visualInsights.TotalPositions = new PositionData(){
+                                                     GradeLineData = new List<LineData>(),
+                                                     GenderPieData =new List<LOBPieData>(),
+                                                     LOBPieData = new List<LOBPieData>(),
+                                                     StatusAreaData = new List<LineData>(),
+                                                     HeadCount = TotalPositions.Sum(s => s.headcount) ?? 0,
+                                                     Spoc = new List<SPOC>()
+                                                    };
+
+                    visualInsights.ClosedPositions = new PositionData(){
+                                                     GradeLineData = new List<LineData>(),
+                                                     GenderPieData =new List<LOBPieData>(),
+                                                     LOBPieData = new List<LOBPieData>(),
+                                                     StatusAreaData = new List<LineData>(),
+                                                     HeadCount = dashboard.candidates.Where(c => c.statusid == 10).Count(),
+                                                     Spoc = new List<SPOC>()
+                                                    };
+
+                    visualInsights.ActivePositions = new PositionData(){
+                                                     GradeLineData = new List<LineData>(),
+                                                     GenderPieData =new List<LOBPieData>(),
+                                                     LOBPieData = new List<LOBPieData>(),
+                                                     StatusAreaData = new List<LineData>(),
+                                                     HeadCount = visualInsights.TotalPositions.HeadCount - visualInsights.ClosedPositions.HeadCount,
+                                                     Spoc = new List<SPOC>()
+                                                     };
+
+                    visualInsights.ResumeUploaded = Connector.GetDatabase().GetCollection<ReferredList>("candidate").FindAll().ToList().Count;
+
+                    List<string> Grades = TotalPositions.Select(s => s.grade).Distinct().ToList();
+                    List<string> LOB = TotalPositions.Select(s => s.lob).Distinct().ToList();
+
+                    List<Content> totalGrades = new List<Content>();
+                    List<Content> closedGrades = new List<Content>();
+                    List<Content> activeGrades = new List<Content>();
+
+                    List<Content> totallob = new List<Content>();
+                    List<Content> closedlob = new List<Content>();
+                    List<Content> activelob = new List<Content>();
+
+                    List<Content> totalgender = new List<Content>();
+                    List<Content> closedgender = new List<Content>();
+                    List<Content> activegender = new List<Content>();
+
+                    List<Content> totalstatus = new List<Content>();
+                    List<Content> closedstatus = new List<Content>();
+                    List<Content> activestatus = new List<Content>();
+                    foreach (Positions item in TotalPositions)
+                    {
+                        List<ReferredList> List = Connector.GetDatabase().GetCollection<ReferredList>("candidate").Find(Query.EQ("jobid", Convert.ToString(item._id))).ToList();
+                        foreach (ReferredList candidate in List)
+                        {
+                            string label = string.Empty;
+                            if (candidate.statusid < 2)
+                            {
+                                label = "Resume Uploaded";
+                                totalstatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                activestatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                }); 
+                                closedstatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                            }
+                            else if (candidate.statusid < 4 && candidate.statusid >= 2)
+                            {
+                                label = "Resume Uploaded";
+                                totalstatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                activestatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                closedstatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                label = "HR Shortlisted";
+                                totalstatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                activestatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                closedstatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                            }
+                            else if (candidate.statusid < 9 && candidate.statusid >= 4)
+                            {
+                                label = "Resume Uploaded";
+                                totalstatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                activestatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                closedstatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                label = "HR Shortlisted";
+                                totalstatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                activestatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                closedstatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                label = "Interview Shortlisted";
+                                totalstatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                activestatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                closedstatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                            }
+                            else if (candidate.statusid == 9)
+                            {
+                                label = "Resume Uploaded";
+                                totalstatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                activestatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                closedstatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                label = "HR Shortlisted";
+                                totalstatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                activestatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                closedstatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                label = "Interview Shortlisted";
+                                totalstatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                activestatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                closedstatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                label = "Offered";
+                                totalstatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                activestatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                closedstatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                            }
+                            else if (candidate.statusid == 10)
+                            {
+                                label = "Resume Uploaded";
+                                totalstatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                activestatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                closedstatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                label = "HR Shortlisted";
+                                totalstatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                activestatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                closedstatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                label = "Interview Shortlisted";
+                                totalstatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                activestatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                closedstatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                label = "Offered";
+                                totalstatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                activestatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                closedstatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                label = "Joined";
+                                totalstatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                activestatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                closedstatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                            }
+                            else if (candidate.statusid == 11)
+                            {
+                                label = "Resume Uploaded";
+                                totalstatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                activestatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                closedstatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                label = "HR Shortlisted";
+                                totalstatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                activestatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                closedstatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                label = "Interview Shortlisted";
+                                totalstatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                activestatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                closedstatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                label = "Offered";
+                                totalstatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                activestatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                closedstatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                label = "Not Joined";
+                                totalstatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                closedstatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                                activestatus.Add(new Content()
+                                {
+                                    Name = label,
+                                    data = 1
+                                });
+                            }
+                        }
+                        Int64 total = item.headcount?? 0;
+                        Int64 closed = (from l in List where l.statusid == 10 select l).ToList().Count;
+                        Int64 active = total - closed;
+                        totalgender.Add(new Content()
+                        {
+                            Name = item.Diversity_Position ? "Female": "Male",
+                            data = total
+                        });
+                        totallob.Add(new Content()
+                        {
+                            Name = item.lob,
+                            data = total
+                        });
+                        totalGrades.Add(new Content()
+                        {
+                            Name = item.grade,
+                            data = total
+                        });
+                        if (closed > 0)
+                        {
+                            closedgender.Add(new Content()
+                            {
+                                Name = item.Diversity_Position ? "Female" : "Male",
+                                data = closed
+                            });
+                            closedlob.Add(new Content()
+                            {
+                                Name = item.lob,
+                                data = closed
+                            });
+                            closedGrades.Add(new Content()
+                            {
+                                Name = item.grade,
+                                data = closed
+                            });
+                        }
+                        if (active > 0)
+                        {
+                            activegender.Add(new Content()
+                            {
+                                Name = item.Diversity_Position ? "Female" : "Male",
+                                data = active
+                            });
+                            activelob.Add(new Content()
+                            {
+                                Name = item.lob,
+                                data = active
+                            });
+                            activeGrades.Add(new Content()
+                            {
+                                Name = item.grade,
+                                data = active
+                            });
+                        }
+                    }
+                    //visualInsights.TotalPositions.StatusAreaData
+                    foreach (string status in totalstatus.Select(s => s.Name).Distinct().ToList())
+                    {
+                        Int64 count = totalstatus.Where(s => s.Name == status).Sum(s => s.data);
+                        visualInsights.TotalPositions.StatusAreaData.Add(new LineData()
+                        {
+                            Label = status,
+                            data = count
+                        });
+                    }
+                    foreach (string status in activestatus.Select(s => s.Name).Distinct().ToList())
+                    {
+                        Int64 count = activestatus.Where(s => s.Name == status).Sum(s => s.data);
+                        visualInsights.ActivePositions.StatusAreaData.Add(new LineData()
+                        {
+                            Label = status,
+                            data = count
+                        });
+                    }
+                    foreach (string status in closedstatus.Select(s => s.Name).Distinct().ToList())
+                    {
+                        Int64 count = closedstatus.Where(s => s.Name == status).Sum(s => s.data);
+                        visualInsights.ClosedPositions.StatusAreaData.Add(new LineData()
+                        {
+                            Label = status,
+                            data = count
+                        });
+                    }
+                    string []pieColorArray= {"#f56954","#00a65a","#f39c12","#00c0ef","#3c8dbc","#d2d6de"};
+                    int colorIndex = 0;
+                    foreach (string gender in totalgender.Select(G => G.Name).Distinct().ToList())
+                    {
+                        Int64 count = totalgender.Where(g => g.Name == gender).Sum(g => g.data);
+                        visualInsights.TotalPositions.GenderPieData.Add(new LOBPieData()
+                        {
+                            label = gender,
+                            value = count,
+                            color = pieColorArray[colorIndex],
+                            highlight = pieColorArray[colorIndex++],
+                        });
+                    }
+                    colorIndex = 0;
+                    foreach (string gender in closedgender.Select(G => G.Name).Distinct().ToList())
+                    {
+                        Int64 count = closedgender.Where(g => g.Name == gender).Sum(g => g.data);
+                        visualInsights.ClosedPositions.GenderPieData.Add(new LOBPieData()
+                        {
+                            label = gender,
+                            value = count,
+                            color = pieColorArray[colorIndex],
+                            highlight = pieColorArray[colorIndex++],
+                        });
+                    }
+                    colorIndex = 0;
+                    foreach (string gender in activegender.Select(G => G.Name).Distinct().ToList())
+                    {
+                        Int64 count = activegender.Where(g => g.Name == gender).Sum(g => g.data);
+                        visualInsights.ActivePositions.GenderPieData.Add(new LOBPieData()
+                        {
+                            label = gender,
+                            value = count,
+                            color = pieColorArray[colorIndex],
+                            highlight = pieColorArray[colorIndex++],
+                        });
+                    }
+                    colorIndex = 0;
+                    foreach (string lob in totallob.Select(G => G.Name).Distinct().ToList())
+                    {
+                        Int64 count = totallob.Where(g => g.Name == lob).Sum(g => g.data);
+                        visualInsights.TotalPositions.LOBPieData.Add(new LOBPieData()
+                        {
+                            label = lob,
+                            value = count,
+                            color = pieColorArray[colorIndex],
+                            highlight = pieColorArray[colorIndex++],
+                        });
+                    }
+                    colorIndex = 0;
+                    foreach (string lob in closedlob.Select(G => G.Name).Distinct().ToList())
+                    {
+                        Int64 count = closedlob.Where(g => g.Name == lob).Sum(g => g.data);
+                        visualInsights.ClosedPositions.LOBPieData.Add(new LOBPieData()
+                        {
+                            label = lob,
+                            value = count,
+                            color = pieColorArray[colorIndex],
+                            highlight = pieColorArray[colorIndex++],
+                        });
+                    }
+                    colorIndex = 0;
+                    foreach (string lob in activelob.Select(G => G.Name).Distinct().ToList())
+                    {
+                        Int64 count = activelob.Where(g => g.Name == lob).Sum(g => g.data);
+                        visualInsights.ActivePositions.LOBPieData.Add(new LOBPieData()
+                        {
+                            label = lob,
+                            value = count,
+                            color = pieColorArray[colorIndex],
+                            highlight = pieColorArray[colorIndex++],
+                        });
+                    }
+                    foreach (string grade in totalGrades.Select(G => G.Name).Distinct().ToList())
+                    {
+                        Int64 count = totalGrades.Where(g => g.Name == grade).Sum(g => g.data);
+                        visualInsights.TotalPositions.GradeLineData.Add(new LineData()
+                        {
+                            Label = grade,
+                            data = count
+                        });
+                    }
+                    foreach (string grade in closedGrades.Select(G => G.Name).Distinct().ToList())
+                    {
+                        Int64 count = totalGrades.Where(g => g.Name == grade).Sum(g => g.data);
+                        visualInsights.ClosedPositions.GradeLineData.Add(new LineData()
+                        {
+                            Label = grade,
+                            data = count
+                        });
+                    }
+                    foreach (string grade in activeGrades.Select(G => G.Name).Distinct().ToList())
+                    {
+                        Int64 count = totalGrades.Where(g => g.Name == grade).Sum(g => g.data);
+                        visualInsights.ActivePositions.GradeLineData.Add(new LineData()
+                        {
+                            Label = grade,
+                            data = count
+                        });
+                    }
+                    List<string> Recuriters = TotalPositions.Select(s => s.RecruiterName).Distinct().ToList();
+
+                    foreach (string name in Recuriters)
+                    {
+                        List<ReferredList> AllCandidates = new List<ReferredList>();
+                        List<ReferredList> ActiveCandidates = new List<ReferredList>();
+                        List<ReferredList> ClosedCandidates = new List<ReferredList>();
+                        foreach (ObjectId jobid in TotalPositions.Where(p => p.RecruiterName == name).Select(p => p._id).Distinct().ToList())
+                        {
+                            AllCandidates.AddRange(Connector.GetDatabase().GetCollection<ReferredList>("candidate").Find(Query.EQ("jobid", Convert.ToString(jobid))).ToList());
+                        }
+                        ActiveCandidates.AddRange(from r in AllCandidates where r.statusid != 10 select r);
+                        ClosedCandidates.AddRange(from r in AllCandidates where r.statusid == 10 select r);
+
+                        visualInsights.ActivePositions.Spoc.Add(new SPOC()
+                        {
+                            Name = name,
+                            HeadCount = ActiveCandidates.Count
+                            
+                        });
+                        visualInsights.ClosedPositions.Spoc.Add(new SPOC()
+                        {
+                            Name = name,
+                            HeadCount = ClosedCandidates.Count
+                        });
+
+                        visualInsights.TotalPositions.Spoc.Add(new SPOC()
+                        {
+                            Name = name,
+                            HeadCount = AllCandidates.Count
+                        });
+                    }
+                    return View();
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View();
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+        }
